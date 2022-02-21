@@ -1,0 +1,51 @@
+.seatBookingContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.seatBookingContainerRow {
+  margin-bottom: 10px;
+}
+
+.seatBookingContainerRowLabel {
+  padding-right: 10px;
+  color: darkolivegreen;
+  font-weight: bold;
+}
+
+.theatreViewContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.screenViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screenLabel {
+  font-weight: BOLD;
+  font-size: 20px;
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+}
+
+.buttonBookSeats {
+  height: 50px;
+  width: 200px;
+  border: none;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  background-color: #F45866;
+  box-shadow: 2px 5px rgba(0, 2, 10, 0.123);
+  color: white;
+  font-weight: bolder;
+  font-size: 15px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}

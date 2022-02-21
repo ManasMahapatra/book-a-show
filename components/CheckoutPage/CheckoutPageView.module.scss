@@ -1,0 +1,23 @@
+.checkoutPageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+.checkoutPageBackButton {
+  background-color: transparent;
+  color: #F45866;
+  border-color: #F45866;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.checkoutPageConfirmButton {
+  background-color: #F45866;
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  margin: 20px 0;
+}

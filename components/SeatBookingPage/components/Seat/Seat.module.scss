@@ -1,0 +1,39 @@
+.seat {
+  background-color: transparent;
+  border: 1px solid black;
+  height: 40px;
+  width: 70px;
+  border-radius: 50px;
+  margin: 0 7px;
+  box-shadow: 2px 5px rgba(0, 2, 10, 0.123);
+  cursor: pointer;
+}
+
+.seatLabel {
+  color: black;
+  font-weight: bold;
+}
+
+.seatAvailable {
+  background-color: #439A86;
+}
+
+.seatBooked {
+  background-color: #CCA43B;
+}
+
+.seatUnavailable {
+  background-color: #EDAF97;
+  cursor: not-allowed;
+}
+
+.seatDisabled {
+  background-color: #475B63;
+  cursor: not-allowed;
+}
+
+.seatBlocked {
+  background-color: #CC3F0C;
+  cursor: not-allowed;
+}
+
