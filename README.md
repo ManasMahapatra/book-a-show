@@ -1,34 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a simple seat booking component, that we usually see in a ticket booking app. The features include showing the availability of seats. i.e If the seats are available to book, unavailable, disabled because of theatre orientation or any other reason, or currently blocked by someone who is trying to reserve the seats. When you select a seat, it blocks your seat realtime for a certain amount of time, within which no one can book the seats. When time expires and the payment is not yet done, the seat is available to everyone.
 
-## Getting Started
+##Approach
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+So when I thought of the problem statement, I started working on the ENTITY part of the problem. Considering only this part of the Application, we only required these params: Seating structure/orientation, individual seat prices, and the booking status of each seat.
+Now while choosing the data structure for this, the first obvious option was to have 2D matrix. However the issue that I though might happen was, given that we want to make the seat blocking feature realtime, and firebase being one of the optimal solution for realtime, it doesn't support Arrays to be stored. Also, in a general theatre, the rows are usually marked with alphabets. So I choose data structure which stored the seating orientation like:
 ```
+{
+  'A': [{seatPrice: '250', bookingStatus: 'AVAILABLE'}, {seatPrice: '350', bookingStatus: 'DISABLED'}.....],
+  'B': [{seatPrice: '250', bookingStatus: 'UNAVAILABLE'}, {seatPrice: '350', bookingStatus: 'DISABLED'}.....],
+  ....
+}
+```
+This choice gave me the scope to retain the structure properly on something like firebase.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then next comes the APPLICATION part of the problem. Being a very simple two component app, the use cases that we needed to consider were also simple. We simply needed two main functionalities, those are update the entity and store the bokking status once the timer starts.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+The next comes the PRESENTATION part of the problem. I decided to keep the logic and UI part of the components different, as I find it a more maintainable approach to separate complexities. Overall there were three major components, the seating structure, teh checkout page and the timer component.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+##Tech Used, Shortcomings and Better Solutions
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The ENTITY part is currently structured keeping in mind the real time aspect of the problem. Had it not been a real time case (like many booking apps, where you get the updated status once you refetch), we could have gone by something like a 2D matric which can be bit more easily scaled.
 
-## Learn More
+The APPLICATION part is currently a simple context which is then fitted in a custom hook so as to keep it clean. However it was only written this way keeping in mind that this constitutes of only two components. However had this been a bigger application, this will be a very wrong choice. Context API should only store things that are not usually modified, becuase they are wrapped somewhere up in the hirearchy, otherwise it will be a highly inefficient system, as whenever a variable changes, the entire app rerenders. Sure we can memoize the components, but it's still an anti pattern. Now the solution to this that I would have preferred have two parts:
 
-To learn more about Next.js, take a look at the following resources:
+ 1) If realtime is required, I would have preferred something like react-redux and react-redux-firebase as my store. That keeps the entire realtime thing very clean
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ 2) If realtime was not required, I would have preferred to use react-query to handle the state, as I find it very efficien in handling data that is being fetched.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+the PRESENTATION part is currently just a simple view. Everything in this part can be improvised by many folds. Also we can make it responsive as this app can most likely be used in multiple devices. Also we should have an admin panel for the theater handlers to provide information.
